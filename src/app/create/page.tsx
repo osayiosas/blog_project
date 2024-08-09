@@ -2,7 +2,7 @@
 
 import Button from "@/components/button";
 import { firebaseConfig, formControls } from "@/utils";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
   getStorage,
   ref,
@@ -10,9 +10,12 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { initializeApp } from "firebase/app";
+import Spinner from "@/components/spinner";
+import { GlobalContext } from "@/context";
+import { BlogFormData } from "@/utils/types";
 
 const app = initializeApp(firebaseConfig);
-const stroage = getStorage(app, "gs://blog-project-164a6.appspot.com");
+const stroage = getStorage(app, "gs://chatter-blog-app-82bba.appspot.com");
 
 function createUniqueFileName(fileName: string) {
   const timeStamp = Date.now();
@@ -41,6 +44,7 @@ async function handleImageSaveToFirebae(file: any) {
 }
 
 export default function Create() {
+  const { formData, setFormData } = useContext(GlobalContext);
   const [imageLoading, setImageLoading] = useState<boolean>(false);
 
   async function handleBlogImageChange(
@@ -48,15 +52,21 @@ export default function Create() {
   ) {
     if (!event.target.files) return;
     setImageLoading(true);
-    const saveImageToFirebase = await handleImageSaveToFirebae(
+    const saveImageToFirebase: any = await handleImageSaveToFirebae(
       event.target.files[0]
     );
 
     if (saveImageToFirebase !== "") {
       setImageLoading(false);
-      console.log(saveImageToFirebase, 'saveImageToFirebase');
+      console.log(saveImageToFirebase, "saveImageToFirebase");
+      setFormData({
+        ...formData,
+        image: saveImageToFirebase,
+      });
     }
   }
+
+  console.log(formData, "formData");
 
   return (
     <section className="overflow-hidden py-16 md:py-20 lg:py-28">
@@ -69,18 +79,26 @@ export default function Create() {
               </h2>
               <div>
                 <div className="flex flex-col gap-3">
-                  <div>
-                    <label className="mb-3 block text-sm font-medium text-dark dark:text-white">
-                      Upload image
-                    </label>
-                    <input
-                      id="fileinput"
-                      accept="image/*"
-                      max={1000000}
-                      type="file"
-                      onChange={handleBlogImageChange}
-                      className="w-full mb-8 rounded-md border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242b51] dark:shadow-signUp"
-                    />
+                  <div className="flex gap-3">
+                    <div className={`${imageLoading ? "w-1/2" : "w-full"}`}>
+                      <label className="mb-3 block text-sm font-medium text-dark dark:text-white">
+                        Upload image
+                      </label>
+                      <input
+                        id="fileinput"
+                        accept="image/*"
+                        max={1000000}
+                        type="file"
+                        onChange={handleBlogImageChange}
+                        className="w-full mb-8 rounded-md border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242b51] dark:shadow-signUp"
+                      />
+                    </div>
+
+                    {imageLoading ? (
+                      <div className="w-1/2">
+                        <Spinner />
+                      </div>
+                    ) : null}
                   </div>
 
                   <div className="-mx-4 flex flex-wrap">
@@ -94,6 +112,15 @@ export default function Create() {
                             type={control.type}
                             name={control.id}
                             placeholder={control.placeholder}
+                            onChange={(
+                              event: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              setFormData({
+                                ...formData,
+                                [control.id]: event.target.value,
+                              });
+                            }}
+                            value={formData[control.id as keyof BlogFormData]}
                             className="w-full mb-8 rounded-md border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242b51] dark:shadow-signUp"
                           />
                         ) : control.component === "textarea" ? (
@@ -101,12 +128,30 @@ export default function Create() {
                             placeholder={control.placeholder}
                             rows={5}
                             name={control.id}
+                            onChange={(
+                              event: React.ChangeEvent<HTMLTextAreaElement>
+                            ) => {
+                              setFormData({
+                                ...formData,
+                                [control.id]: event.target.value,
+                              });
+                            }}
+                            value={formData[control.id as keyof BlogFormData]}
                             className="w-full mb-8 rounded-md border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242b51] dark:shadow-signUp"
                           />
                         ) : control.component === "select" ? (
                           <select
                             key={index}
                             name={control.id}
+                            onChange={(
+                              event: React.ChangeEvent<HTMLSelectElement>
+                            ) => {
+                              setFormData({
+                                ...formData,
+                                [control.id]: event.target.value,
+                              });
+                            }}
+                            value={formData[control.id as keyof BlogFormData]}
                             placeholder={control.placeholder}
                             className="w-full resize-none mb-8 rounded-md border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242b51] dark:shadow-signUp"
                           >
