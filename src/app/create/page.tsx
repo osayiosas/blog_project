@@ -13,6 +13,7 @@ import { initializeApp } from "firebase/app";
 import Spinner from "@/components/spinner";
 import { GlobalContext } from "@/context";
 import { BlogFormData } from "@/utils/types";
+import { useSession } from "next-auth/react";
 
 const app = initializeApp(firebaseConfig);
 const stroage = getStorage(app, "gs://chatter-blog-app-82bba.appspot.com");
@@ -46,6 +47,9 @@ async function handleImageSaveToFirebae(file: any) {
 export default function Create() {
   const { formData, setFormData } = useContext(GlobalContext);
   const [imageLoading, setImageLoading] = useState<boolean>(false);
+  const {data: session} = useSession();
+
+  console.log(session, "session");
 
   async function handleBlogImageChange(
     event: React.ChangeEvent<HTMLInputElement>
@@ -64,6 +68,27 @@ export default function Create() {
         image: saveImageToFirebase,
       });
     }
+  }
+
+  async function handleSaveBlogPost() {
+    console.log(formData);
+
+    const res = await fetch("/api/blog-post/add-post", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        ...formData,
+        userid: session?.user?.name,
+        userimage: session?.user?.image,
+        comments: [],
+      }),
+    });
+
+    const data = await res.json();
+
+    console.log(data, "data123");
   }
 
   console.log(formData, "formData");
@@ -172,7 +197,7 @@ export default function Create() {
                       </div>
                     ))}
                     <div className="w-full px-4">
-                      <Button text="Create New Story" onClick={() => {}} />
+                      <Button text="Create New Story" onClick={handleSaveBlogPost} />
                     </div>
                   </div>
                 </div>
