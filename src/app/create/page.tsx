@@ -14,6 +14,7 @@ import Spinner from "@/components/spinner";
 import { GlobalContext } from "@/context";
 import { BlogFormData } from "@/utils/types";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const app = initializeApp(firebaseConfig);
 const stroage = getStorage(app, "gs://chatter-blog-app-82bba.appspot.com");
@@ -47,7 +48,8 @@ async function handleImageSaveToFirebae(file: any) {
 export default function Create() {
   const { formData, setFormData } = useContext(GlobalContext);
   const [imageLoading, setImageLoading] = useState<boolean>(false);
-  const {data: session} = useSession();
+  const { data: session } = useSession();
+  const router = useRouter()
 
   console.log(session, "session");
 
@@ -89,6 +91,10 @@ export default function Create() {
     const data = await res.json();
 
     console.log(data, "data123");
+
+    if (data && data.success) {
+      router.push('/blogs')
+    }
   }
 
   console.log(formData, "formData");
@@ -197,7 +203,10 @@ export default function Create() {
                       </div>
                     ))}
                     <div className="w-full px-4">
-                      <Button text="Create New Story" onClick={handleSaveBlogPost} />
+                      <Button
+                        text="Create New Story"
+                        onClick={handleSaveBlogPost}
+                      />
                     </div>
                   </div>
                 </div>
