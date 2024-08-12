@@ -10,7 +10,11 @@ export default function BlogList({ lists }: { lists: Blog[] }) {
 
   useEffect(()=>{
     router.refresh();
-  },[]);
+  },[ ]);
+
+  async function  handleDelete(id: number) {
+    console.log(id)
+  }
 
   return (
     <section className="pt-[120px] pb-[120px]">
@@ -19,7 +23,7 @@ export default function BlogList({ lists }: { lists: Blog[] }) {
           {lists && lists.length
             ? lists.map((listItem: Blog) => (
                 <div className="px-4" key={listItem.id}>
-                  <SingleBlog  blogItem={listItem}/>
+                  <SingleBlog handleDelete={handleDelete}  blogItem={listItem}/>
                 </div>
               ))
             : null}

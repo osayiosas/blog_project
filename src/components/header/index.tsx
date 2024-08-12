@@ -3,17 +3,20 @@
 import { menuItems } from "@/utils";
 import { MenuItem } from "@/utils/types";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Button from "../button";
 import ThemeToggler from "../theme";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { GlobalContext } from "@/context";
 
 export default function Header() {
   const [sticky, setSticky] = useState<boolean>(false);
   const [navbarOpen, setNavbarOpen] = useState<boolean>(false);
   const { data: session } = useSession();
+  const {setSearchResults} = useContext(GlobalContext)
   const router = useRouter();
+  const pathName = usePathname();
 
   console.log(session, "session");
 
@@ -29,6 +32,10 @@ export default function Header() {
   useEffect(() => {
     window.addEventListener("scroll", handleStickyNavbar);
   });
+
+  useEffect(() => {
+    setSearchResults([])
+  },[pathName])
   return (
     <div>
       <header
