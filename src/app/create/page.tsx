@@ -1,7 +1,7 @@
 "use client";
 
 import Button from "@/components/button";
-import { firebaseConfig, formControls } from "@/utils";
+import { firebaseConfig, formControls, initialBlogFormData } from "@/utils";
 import { useContext, useState } from "react";
 import {
   getStorage,
@@ -93,6 +93,7 @@ export default function Create() {
     console.log(data, "data123");
 
     if (data && data.success) {
+      setFormData(initialBlogFormData);
       router.push('/blogs')
     }
   }

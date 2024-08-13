@@ -1,27 +1,26 @@
-
 import prisma from "@/database";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function DELETE(req: NextRequest) {
+export async function GET(req: NextRequest) {
   try {
-    const url = new URL(req.url);
-    const extractIdOfBlogItemToBeDeleted = url.searchParams.get("id");
+    const { searchParams } = new URL(req.url);
+    const extractCategoryID = searchParams.get("categoryID");
 
-    const deletedBlogPost = await prisma.post.delete({
+    const getBlogCategoryBasedOnCurrentCategoryID = await prisma.post.findMany({
       where: {
-        id: Number(extractIdOfBlogItemToBeDeleted),
+        category: extractCategoryID || "",
       },
     });
 
-    if (deletedBlogPost) {
+    if (getBlogCategoryBasedOnCurrentCategoryID) {
       return NextResponse.json({
         success: true,
-        message: "Story Deleted Successfully",
+        data: getBlogCategoryBasedOnCurrentCategoryID,
       });
     } else {
       return NextResponse.json({
         success: false,
-        message: "Failed to delete the blog ! Please try again",
+        message: "failed to get category",
       });
     }
   } catch (e) {

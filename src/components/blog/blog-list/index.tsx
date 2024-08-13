@@ -10,10 +10,20 @@ export default function BlogList({ lists }: { lists: Blog[] }) {
 
   useEffect(()=>{
     router.refresh();
-  },[ ]);
+  }, []);
 
   async function  handleDelete(id: number) {
     console.log(id)
+
+    const res = await fetch(`/api/blog-post/delete-post?id=${id}`, {
+      method : 'DELETE',
+      cache : 'no-store'
+    })
+
+    const data = await res.json();
+
+    if (data && data.success) router.refresh();
+
   }
 
   return (

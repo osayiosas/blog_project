@@ -14,7 +14,7 @@ export default function Header() {
   const [sticky, setSticky] = useState<boolean>(false);
   const [navbarOpen, setNavbarOpen] = useState<boolean>(false);
   const { data: session } = useSession();
-  const {setSearchResults} = useContext(GlobalContext)
+  const {setSearchQuery, setSearchResults} = useContext(GlobalContext)
   const router = useRouter();
   const pathName = usePathname();
 
@@ -35,6 +35,7 @@ export default function Header() {
 
   useEffect(() => {
     setSearchResults([])
+    setSearchQuery("")
   },[pathName])
   return (
     <div>
