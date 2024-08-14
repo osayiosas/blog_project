@@ -105,7 +105,7 @@ export default function Create() {
       <div className="container">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
-            <div className="mb-12 rounded-md bg-primary/[3%] py-10 px-8 dark:bg-dark sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px] ">
+            <div className="mb-12 rounded-md bg-[#afe3e4] py-10 px-8 dark:bg-dark sm:p-[55px] lg:mb-5 lg:px-8 xl:p-[55px] ">
               <h2 className="mb-3 text-2xl font-bold text-black dark:text-white sm:text-3xl lg:2xl xl:text-2xl">
                 Write Your Own Story
               </h2>

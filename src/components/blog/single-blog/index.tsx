@@ -31,7 +31,7 @@ export default function SingleBlog({
         <h3>
           <Link
             className="mb-4 text-ellipsis overflow-hidden whitespace-nowrap block text-xl font-bold text-black hover:text-primary dark:text-white dark:hover:text-primary sm:2xl:"
-            href={"/"}
+            href={`/blogs/${id}`}
           >
             {title}
           </Link>
