@@ -51,13 +51,19 @@ export default function Home() {
                   Chatter Tell Your Story
                 </h1>
                 <p className="mb-12 text-base font-medium !leading-relaxed text-body-color dark:text-white dark:opacity-90 sm:text-lg md:text-xl">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Veritatis sunt ipsum inventore nemo aperiam. Eligendi, dolor!
+                  Chatter is a unique platform tailored for the traditional
+                  bookworm who treasures the power of words and the art of
+                  storytelling. In a digital age dominated by visual content,
+                  Chatter offers a refreshing retreat for those who prefer the
+                  quiet, contemplative space of text-based engagement. This
+                  platform is designed to celebrate the written word, providing
+                  a space where readers and writers can connect over their
+                  shared love for literature, essays, and long-form content.
                 </p>
               </div>
               <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                 <Link
-                  className="rounded-md bg-primary py-4 px-8 text-base font-semibold text-white hover:bg-primary/80"
+                  className="rounded-md bg-body-color py-4 px-8 text-base font-semibold text-white hover:bg-primary/80"
                   href={"/blogs"}
                 >
                   Explore chatter

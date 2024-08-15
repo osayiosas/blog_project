@@ -69,7 +69,7 @@ export default function CategoryList({ list }: { list: Blog[] }) {
                     // eslint-disable-next-line react/jsx-key
                     <button
                       onClick={() => router.push(`/category/${catItem.value}`)}
-                      className="mr-3 mb-3 inline-flex items-center justify-center rounded-md bg-primary py-2 px-4 text-white duration-300 hover:bg-primary-dark"
+                      className="mr-3 mb-3 inline-flex items-center justify-center rounded-md bg-body-color py-2 px-4 text-white duration-300 hover:bg-primary-dark"
                     >
                       {catItem.label}
                     </button>

@@ -9,7 +9,7 @@ export default function Spinner() {
       width={"120"}
       ariaLabel="Common Loader"
       borderColor="#000"
-      barColor="#fff"
+      barColor="#a0a6ac"
       wrapperStyle={{ display: "block", margin: "0 auto" }}
     />
   );

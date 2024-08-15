@@ -84,7 +84,7 @@ export default function BlogDetailsHome({ blogData }: { blogData: Blog }) {
                   </div>
                   <div className="mb-5">
                     <Link
-                      className="inline-flex items-center justify-center rounded-full bg-primary py-2 px-4 text-sm font-semibold text-white"
+                      className="inline-flex items-center justify-center rounded-full bg-body-color py-2 px-4 text-sm font-semibold text-white"
                       href={`/category/${blogData?.category}`}
                     >
                       {blogData?.category}

@@ -6,6 +6,7 @@ import NextthemeProvider from "@/providers/theme-provider";
 
 import GlobalState from "@/context";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -20,12 +21,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="dark:bg-black" >
+      <body className="dark:bg-[#01040b]">
         <NextthemeProvider>
           <NextAuthProvider>
             <GlobalState>
               <Header />
               {children}
+              <Footer />
             </GlobalState>
           </NextAuthProvider>
         </NextthemeProvider>

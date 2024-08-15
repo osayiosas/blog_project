@@ -1,4 +1,7 @@
 
+// "
+
+
 "use client";
 
 import SingleBlog from "@/components/blog/single-blog";
@@ -22,8 +25,6 @@ export default function Search() {
 
     const data = await res.json();
 
-    console.log(data, "searchdata");
-
     if (data.success) {
       setSearchResults(data.data);
     }
@@ -34,8 +35,6 @@ export default function Search() {
   }
 
   async function handleDelete(id: number) {
-    console.log(id);
-
     const res = await fetch(`/api/blog-post/delete-post?id=${id}`, {
       method: "DELETE",
       cache: "no-store",
@@ -47,13 +46,13 @@ export default function Search() {
   }
 
   return (
-    <section className="overflow-hidden py-16 md:py-20 lg:py-28">
+    <section className="overflow-hidden py-10 md:py-16 lg:py-20">
       <div className="container">
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
-            <div className="mb-12 rounded-md bg-primary/[3%] py-11 px-8 dark:bg-dark sm:p-[50px] lg:mb-5 lg:px-8 xl:p-[55px]">
-              <h2 className="mb-3 text-2xl font-bold text-black dark:text-white sm:text-3xl lg:text-2xl xl:text-3xl">
-                Search stories
+            <div className="mb-10 rounded-md bg-primary/[3%] py-8 px-6 dark:bg-dark sm:py-10 sm:px-8 lg:mb-8 lg:px-8 xl:py-12 xl:px-10">
+              <h2 className="mb-4 text-xl font-bold text-black dark:text-white sm:text-2xl lg:text-3xl">
+                Search Stories
               </h2>
               <div className="flex flex-col gap-4">
                 <div className="flex gap-4">
@@ -64,7 +63,7 @@ export default function Search() {
                     placeholder="Search Blogs"
                     autoFocus
                     autoComplete="off"
-                    className="w-full rounded-md border border-transparent py-3 px-6 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
+                    className="w-full rounded-md border border-transparent py-3 px-4 text-base text-body-color placeholder-body-color shadow-one outline-none focus:border-primary focus-visible:shadow-none dark:bg-[#242B51] dark:shadow-signUp"
                     value={searchQuery}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setSearchQuery(e.target.value)
@@ -77,14 +76,14 @@ export default function Search() {
               </div>
             </div>
           </div>
-          <section className="pt-[80px] w-full pb-[120px]">
+          <section className="w-full pb-12 md:pb-20">
             <div className="container">
               <div className="-mx-4 flex flex-wrap">
                 {searchResults && searchResults.length ? (
                   searchResults.map((searchBlogItem: Blog) => (
                     <div
                       key={searchBlogItem.id}
-                      className="w-full px-4 md:w-2/3 lg:w-1/2 xl:w-1/3"
+                      className="w-full px-4 mb-8 md:w-1/2 lg:w-1/3 xl:w-1/4"
                     >
                       <SingleBlog
                         handleDelete={handleDelete}
@@ -93,7 +92,11 @@ export default function Search() {
                     </div>
                   ))
                 ) : (
-                  <h1>No search results</h1>
+                  <div className="w-full text-center px-4">
+                    <h1 className="text-lg font-semibold text-body-color dark:text-white">
+                      No search results found
+                    </h1>
+                  </div>
                 )}
               </div>
             </div>
